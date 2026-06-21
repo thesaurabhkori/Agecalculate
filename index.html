@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronos | Advanced Age & Temporal Analytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="age.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="antialiased overflow-x-hidden">
+
+<nav class="fixed top-0 w-full z-50 glass-card px-6 py-4 flex justify-between items-center border-b border-gray-100">
+    <div class="text-2xl font-extrabold tracking-tight text-indigo-600">
+        CHRONOS<span class="text-gray-400">.</span>
+    </div>
+    <div class="hidden md:flex space-x-8 font-semibold text-sm uppercase tracking-widest text-gray-500">
+        <a href="#dashboard" class="nav-link active" onclick="updateNav(this)">Calculate</a>
+        <a href="#ai-suite" class="nav-link" onclick="updateNav(this)">AI Chronicles</a>
+        <a href="#theory" class="nav-link" onclick="updateNav(this)">The Logic</a>
+        <a href="#validation" class="nav-link" onclick="updateNav(this)">Validation</a>
+    </div>
+    <div class="md:hidden text-2xl">☰</div>
+</nav>
+
+<main class="mt-24 max-w-6xl mx-auto px-4 pb-20">
+
+    <!-- HERO / CALCULATOR SECTION -->
+    <section id="dashboard" class="mb-12 animate-fade-in">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black text-gray-900 mb-4">Precision Temporal Analytics</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Input your origin date to generate a comprehensive breakdown of your chronological existence using calendar-accurate arithmetic.</p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-8 md:p-12 max-w-4xl mx-auto mb-12">
+            <form id="age-form" novalidate class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="flex flex-col space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-widest text-gray-500">Day</label>
+                    <input type="number" id="input-day" placeholder="DD" class="w-full text-2xl font-bold p-4 bg-gray-50 border-2 border-transparent rounded-xl focus:border-indigo-500 outline-none transition-all" min="1" max="31">
+                    <span id="err-day" class="text-xs text-red-500 italic opacity-0 transition-opacity">Required field</span>
+                </div>
+                <div class="flex flex-col space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-widest text-gray-500">Month</label>
+                    <input type="number" id="input-month" placeholder="MM" class="w-full text-2xl font-bold p-4 bg-gray-50 border-2 border-transparent rounded-xl focus:border-indigo-500 outline-none transition-all" min="1" max="12">
+                    <span id="err-month" class="text-xs text-red-500 italic opacity-0 transition-opacity">Required field</span>
+                </div>
+                <div class="flex flex-col space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-widest text-gray-500">Year</label>
+                    <input type="number" id="input-year" placeholder="YYYY" class="w-full text-2xl font-bold p-4 bg-gray-50 border-2 border-transparent rounded-xl focus:border-indigo-500 outline-none transition-all" min="1">
+                    <span id="err-year" class="text-xs text-red-500 italic opacity-0 transition-opacity">Required field</span>
+                </div>
+            </form>
+
+            <div class="relative flex items-center justify-center mb-16">
+                <hr class="w-full border-gray-200">
+                <button id="calc-btn" class="absolute bg-indigo-600 hover:bg-gray-900 text-white w-20 h-20 rounded-full flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 shadow-xl">
+                    <span class="text-3xl">▼</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
+                <div class="space-y-2">
+                    <div class="text-5xl md:text-7xl font-black italic tracking-tighter">
+                        <span id="res-years" class="text-indigo-600 counter-value">--</span> YEARS
+                    </div>
+                    <div class="text-5xl md:text-7xl font-black italic tracking-tighter">
+                        <span id="res-months" class="text-indigo-600 counter-value">--</span> MONTHS
+                    </div>
+                    <div class="text-5xl md:text-7xl font-black italic tracking-tighter">
+                        <span id="res-days" class="text-indigo-600 counter-value">--</span> DAYS
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-6 space-y-6">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-gray-400 mb-1">Total Lifetime Days</p>
+                        <p id="res-total-days" class="text-3xl font-extrabold text-gray-800">--</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold uppercase text-gray-400 mb-1">Next Birthday In</p>
+                        <p id="res-next-bday" class="text-3xl font-extrabold text-gray-800">-- <span class="text-lg font-medium text-gray-500">Days</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ✨ AI TEMPORAL CHRONICLES SUITE -->
+    <section id="ai-suite" class="mb-20 pt-20">
+        <div class="glass-card rounded-3xl p-8 md:p-12 max-w-4xl mx-auto border-2 border-indigo-100 ring-4 ring-indigo-50/50">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                <div>
+                    <span class="inline-block px-3 py-1 text-xs font-extrabold tracking-widest text-indigo-700 bg-indigo-50 rounded-full mb-2">COGNITIVE TIME INTELLIGENCE</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-gray-900">AI Temporal Chronicles ✨</h2>
+                    <p class="text-sm text-gray-500">Uncover historical patterns, cosmic travel metrics, forge cosmic artifacts, and hear spoken wisdom from the keeper of the timeline.</p>
+                </div>
+            </div>
+
+            <!-- Lock State -->
+            <div id="ai-locked" class="text-center py-12 px-4 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+                <span class="text-4xl block mb-3">🔒</span>
+                <h3 class="text-lg font-bold text-gray-700 mb-1">Synchronization Required</h3>
+                <p class="text-sm text-gray-500 max-w-md mx-auto">Please input your date of origin and click calculate above to synchronize this device with the Chronos Logic Core and unlock cognitive features.</p>
+            </div>
+
+            <!-- Unlocked State -->
+            <div id="ai-unlocked" class="hidden space-y-8">
+                <!-- Navigation Tabs inside AI suite -->
+                <div class="flex flex-wrap border-b border-gray-200 gap-1 sm:gap-2">
+                    <button id="tab-btn-report" class="py-3 px-4 sm:px-6 text-sm font-bold border-b-2 border-indigo-600 text-indigo-600 focus:outline-none transition-all">✨ Cosmic & Historical Report</button>
+                    <button id="tab-btn-sage" class="py-3 px-4 sm:px-6 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-900 focus:outline-none transition-all">✨ Chat with Chronos Sage</button>
+                    <button id="tab-btn-sigil" class="py-3 px-4 sm:px-6 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-900 focus:outline-none transition-all">✨ Cosmic Sigil Generator</button>
+                </div>
+
+                <!-- AI Report Tab Content -->
+                <div id="ai-content-report" class="space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <p class="text-sm text-gray-600">Sift through temporal layers to reveal a personalized overview of your journey across the cosmos.</p>
+                        <button id="ai-generate-btn" class="w-full sm:w-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md active:scale-95 flex items-center justify-center gap-2">
+                            <span>✨ Generate Cosmic Report</span>
+                        </button>
+                    </div>
+
+                    <!-- Loader for report -->
+                    <div id="report-loader" class="hidden text-center py-12 space-y-4">
+                        <div class="inline-block w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+                        <p class="text-sm text-indigo-600 font-semibold loading-pulse">Querying temporal records from the year <span id="loading-birth-year">...</span></p>
+                    </div>
+
+                    <!-- Error Alert block -->
+                    <div id="report-error" class="hidden p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm flex items-start gap-3">
+                        <span class="text-lg">⚠</span>
+                        <div>
+                            <h4 class="font-bold">Temporal Sync Error</h4>
+                            <p id="report-error-msg" class="text-xs text-red-600 mt-1">Unable to resolve timelines. Please check your network connection and try again.</p>
+                            <button id="report-retry-btn" class="mt-2 text-xs font-bold text-red-800 underline block">✨ Retry Synchronization</button>
+                        </div>
+                    </div>
+
+                    <!-- Output Container -->
+                    <div id="report-output-card" class="hidden bg-indigo-50/50 rounded-2xl p-6 border border-indigo-100 text-gray-800 space-y-4 max-h-[500px] overflow-y-auto">
+                        <div id="report-markdown-content" class="prose max-w-none text-sm leading-relaxed space-y-4">
+                            <!-- Populated Dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Sage Chat Tab Content -->
+                <div id="ai-content-sage" class="hidden space-y-4">
+                    <p class="text-sm text-gray-600">Engage with an ancient keeper of timelines. Ask about major historical events from your birth year, inquire about the significance of your age, or listen to spoken wisdom.</p>
+                    
+                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col h-[350px]">
+                        <div id="chat-messages" class="flex-1 overflow-y-auto space-y-3 mb-4 pr-2">
+                            <!-- Default Greeting -->
+                            <div class="flex items-start gap-3">
+                                <div class="bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0 text-xs">⏳</div>
+                                <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 max-w-[85%] relative group">
+                                    Greetings, traveler. I am the Keeper of the Chronology. I see your timeline entered our stream on <span class="font-semibold text-indigo-600" id="chat-origin-date">...</span>, marking your Earth journey at <span class="font-semibold text-indigo-600" id="chat-current-age">...</span>. What mysteries of your era shall we explore today?
+                                    <button onclick="speakGreeting()" class="absolute right-2 bottom-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity text-xs" title="Listen to Sage">
+                                        🔊 Listen ✨
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini loader for sage responding -->
+                        <div id="sage-typing" class="hidden flex items-center gap-2 pl-12 text-xs text-indigo-600 font-semibold mb-3 loading-pulse">
+                            <span>⏳ The Chronos Sage is reflecting...</span>
+                        </div>
+
+                        <!-- Chat input -->
+                        <div class="flex gap-2">
+                            <input type="text" id="chat-user-input" placeholder="Ask about your birth year, time cycles, or get wisdom..." class="flex-1 p-3 bg-white border border-gray-200 rounded-xl focus:border-indigo-500 outline-none text-sm transition-all">
+                            <button id="chat-send-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-xl font-bold text-sm transition-all active:scale-95">
+                                Send ✨
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Sigil Tab Content -->
+                <div id="ai-content-sigil" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <p class="text-sm text-gray-600">Weave temporal physics with art. Imagen-4 will visualize a high-precision celestial crest based on your chronological birth coordinates.</p>
+                        <button id="ai-sigil-btn" class="w-full sm:w-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md active:scale-95 flex items-center justify-center gap-2">
+                            <span>✨ Forge Cosmic Sigil</span>
+                        </button>
+                    </div>
+
+                    <!-- Loader for sigil -->
+                    <div id="sigil-loader" class="hidden text-center py-12 space-y-4">
+                        <div class="inline-block w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+                        <p class="text-sm text-indigo-600 font-semibold loading-pulse">Aligning stellar orbits of <span id="loading-sigil-year">...</span> with modern spatial vectors...</p>
+                    </div>
+
+                    <!-- Error Alert block -->
+                    <div id="sigil-error" class="hidden p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm flex items-start gap-3">
+                        <span class="text-lg">⚠</span>
+                        <div>
+                            <h4 class="font-bold">Astrographic Link Interrupted</h4>
+                            <p id="sigil-error-msg" class="text-xs text-red-600 mt-1">Unable to forge artwork. Check connections and try again.</p>
+                        </div>
+                    </div>
+
+                    <!-- Sigil Output -->
+                    <div id="sigil-output-card" class="hidden flex flex-col items-center justify-center bg-gray-50 rounded-3xl p-8 border border-gray-100 shadow-inner">
+                        <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-indigo-500/30 shadow-2xl bg-indigo-950 flex items-center justify-center">
+                            <img id="sigil-img" src="" alt="Personal Cosmic Sigil" class="w-full h-full object-cover hidden">
+                            <div id="sigil-placeholder" class="text-gray-400 text-xs italic text-center px-4">Crest Woven in Real-Time</div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-6 text-center italic max-w-md">"A custom cosmological alignment sigil for your timeline, engineered dynamically with Imagen-4."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THEORY / LOGIC SECTION -->
+    <section id="theory" class="mb-20 pt-20">
+        <div class="bg-indigo-900 rounded-3xl p-8 md:p-16 text-white overflow-hidden relative">
+            <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <span class="inline-block px-4 py-1 rounded-full bg-indigo-500 text-xs font-bold mb-6">THEORETICAL FOUNDATIONS</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mb-6">Why calendar arithmetic beats physics.</h2>
+                    <p class="text-indigo-100 text-lg mb-8">Most software calculates age by dividing total milliseconds by 31,556,952,000. This is fundamentally flawed. As outlined in our research, human timekeeping relies on variable month lengths and leap cycles that physics constants cannot predict.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-indigo-700 w-8 h-8 rounded-lg flex items-center justify-center shrink-0 font-bold">1</div>
+                            <p class="text-sm"><strong class="block text-white">Nominal Subtraction:</strong> We start by subtracting individual units (Year, Month, Day) from the evaluation date.</p>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-indigo-700 w-8 h-8 rounded-lg flex items-center justify-center shrink-0 font-bold">2</div>
+                            <p class="text-sm"><strong class="block text-white">Underflow Mitigation:</strong> If the day difference is negative, we "borrow" the exact number of days from the preceding month—not an average.</p>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-indigo-700 w-8 h-8 rounded-lg flex items-center justify-center shrink-0 font-bold">3</div>
+                            <p class="text-sm"><strong class="block text-white">Leap Normalization:</strong> February 29th events are handled via modulo-based leap verification to prevent "date drift".</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 text-gray-800">
+                    <h3 class="text-lg font-bold mb-4 text-center">Calendar Variance Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="monthChart"></canvas>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-4 text-center">This chart visualizes the irregularity of the Gregorian calendar that our logic engine accounts for.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALIDATION / UI SECTION -->
+    <section id="validation" class="mb-20 pt-20">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+            <div class="md:w-1/2">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">Robust Input Orchestration</h2>
+                <p class="text-gray-600 mb-8">Building a reliable temporal tool requires more than math. It requires defensive programming to handle impossible user entries and system boundaries.</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-4 border border-gray-200 rounded-xl">
+                        <div class="text-2xl mb-2">⚠</div>
+                        <h4 class="font-bold text-sm mb-1">Boundary Check</h4>
+                        <p class="text-xs text-gray-500">Detects invalid dates like Feb 30th or April 31st by querying the JS engine's zero-day overflow.</p>
+                    </div>
+                    <div class="p-4 border border-gray-200 rounded-xl">
+                        <div class="text-2xl mb-2">⌛</div>
+                        <h4 class="font-bold text-sm mb-1">Future Prevention</h4>
+                        <p class="text-xs text-gray-500">Real-time comparison against system clock prevents chronological paradoxes.</p>
+                    </div>
+                    <div class="p-4 border border-gray-200 rounded-xl">
+                        <div class="text-2xl mb-2">📱</div>
+                        <h4 class="font-bold text-sm mb-1">CLS Mitigation</h4>
+                        <p class="text-xs text-gray-500">Error messages are pre-allocated in the DOM to prevent layout shifts during validation cycles.</p>
+                    </div>
+                    <div class="p-4 border border-gray-200 rounded-xl">
+                        <div class="text-2xl mb-2">♿</div>
+                        <h4 class="font-bold text-sm mb-1">ARIA Sync</h4>
+                        <p class="text-xs text-gray-500">Dynamic aria-invalid and aria-describedby updates ensure WCAG 2.2 compliance.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="md:w-1/2 w-full">
+                <div class="bg-amber-50 border-2 border-amber-200 rounded-3xl p-8 relative">
+                    <div class="absolute -top-4 -right-4 bg-amber-200 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">INTERACTIVE DEMO</div>
+                    <h3 class="font-bold mb-4">Underflow Simulation</h3>
+                    <p class="text-sm text-amber-900 mb-6 italic">Watch how the logic "borrows" days when you input a birthday that hasn't happened yet this month.</p>
+                    
+                    <div id="logic-viz" class="space-y-3">
+                        <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm">
+                            <span class="text-xs font-bold text-gray-400">NOMINAL DIFFERENCE</span>
+                            <span id="viz-nominal" class="font-mono text-indigo-600">Pending Input...</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm">
+                            <span class="text-xs font-bold text-gray-400">UNDERFLOW ADJUSTMENT</span>
+                            <span id="viz-adjust" class="font-mono text-indigo-600">--</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-indigo-600 p-4 rounded-lg shadow-md text-white">
+                            <span class="text-xs font-bold opacity-80">FINAL RESULT</span>
+                            <span id="viz-final" class="font-mono font-bold">Waiting...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="bg-gray-900 text-gray-500 py-12 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="text-xl font-bold text-white">CHRONOS<span class="text-indigo-500">.</span></div>
+        <p class="text-xs text-center md:text-right">Built according to the <br><strong>Responsive Age Calculator Research Report</strong> <br>© 2026 Information Architecture Group</p>
+    </div>
+</footer>
+
+<script src="age.js"></script>
+</body>
+</html>
